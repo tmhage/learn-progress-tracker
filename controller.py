@@ -33,6 +33,10 @@ class Controller:
         except ValueError:
             raise IncorrectPointsFormatError
 
+    def get_all_student_ids(self) -> list:
+        table = self.db.student_table
+        return [student_id for student_id in table]
+
     def update_course_statistics(self, score_card: ScoreCard) -> None:
         """ Update db course stats based on new scorecard """
         student = self.db.get_student(score_card.student_id)

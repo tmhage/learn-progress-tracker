@@ -9,7 +9,7 @@ def get_validated_input(prompt: str = "") -> Union[str, None]:
         user_input = input(prompt).strip().lower()
         if not user_input:
             raise NoInputError
-        elif user_input.lower() == "back":
+        elif user_input == "back":
             return None
         else:
             return user_input
@@ -29,8 +29,6 @@ def add_students() -> None:
             else:
                 print("Total {} students have been added.".format(newly_added_counter))
                 return None
-        except NoInputError:
-            print("Incorrect credentials.")
         except InvalidInputError as e:
             print(e)
 
@@ -61,17 +59,15 @@ def find() -> None:
                 print(student.score_card)
             else:
                 return None
-        except NoInputError:
-            raise NoStudentError(".")
         except InvalidInputError as e:
             print(e)
 
 
 def list_student_ids() -> None:
-    student_table = controller.db.student_table
-    if student_table:
+    student_ids = controller.get_all_student_ids()
+    if student_ids:
         print("Students:")
-        for student_id in student_table:
+        for student_id in student_ids:
             print(student_id)
     else:
         print("No students found.")
@@ -97,17 +93,21 @@ def print_statistics() -> None:
 def statistics():
     print("Type the name of a course to see details or 'back' to quit")
     print_statistics()
+
     while True:
         course = get_validated_input()
+
         if course:
             try:
                 course_stats = controller.get_course_statistics(course)
                 print(course.capitalize())
                 print("{:<6}{:<10}{:5}".format("id", "points", "completed"))
+
                 if course_stats:
                     for stat in course_stats:
                         student_id, points, completed = stat
                         print("{:<6}{:<10}{:<5}".format(student_id, points, completed))
+
             except InvalidInputError as e:
                 print(e)
         else:

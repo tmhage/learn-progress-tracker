@@ -13,17 +13,14 @@ class Database:
             "flask": Course("Flask", 550)
         }
         self.to_be_notified = {}
-        # self.update_course('dsa', 1)
-        # self.update_course('databases', 4)
-        # self.update_course('python', 4)
 
         # Add sample data
-        # student_a = Student('jim', 'bang', 'jimbang@gmail.com')
-        # student_b = Student('jane', 'doe', 'janedoe@hotmail.com')
-        # student_c = Student('timmy', 'dal', 'timdal@hotmail.com')
-        # self.add_student(student_a)
-        # self.add_student(student_b)
-        # self.add_student(student_c)
+        student_a = Student('jim', 'bang', 'jimbang@gmail.com')
+        student_b = Student('jane', 'doe', 'janedoe@hotmail.com')
+        student_c = Student('timmy', 'dal', 'timdal@hotmail.com')
+        self.add_student(student_a)
+        self.add_student(student_b)
+        self.add_student(student_c)
 
     def get_enrolled_students_ids(self, course_name: str) -> list[int]:
         return self.course_table[course_name].enrolled_students
